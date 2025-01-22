@@ -61,6 +61,238 @@
 body {
     background-color: #FFDAB9;
 }
+/* Hộp quà */
+#gift-box {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+#gift-box:hover {
+    transform: scale(1.1) translateY(-5px);
+}
+
+/* Thân hộp */
+.box {
+    position: relative;
+    width: 150px;
+    height: 120px;
+    background: linear-gradient(145deg, #ff6f61, #ff8b82);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2),
+                inset 0 2px 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Nắp hộp */
+.box .lid {
+    position: absolute;
+    top: -30px;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(145deg, #ff9aa2, #ffb3b9);
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.15),
+                inset 0 2px 5px rgba(255, 255, 255, 0.3);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: bottom;
+}
+
+#gift-box.open .lid {
+    transform: rotateX(140deg) translateY(-10px);
+    background: linear-gradient(145deg, #f77fbe, #ff99cc);
+}
+
+/* Ruy băng */
+.box .ribbons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ribbons .horizontal {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: linear-gradient(90deg, #ffd700, #ffe44d);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.ribbons .vertical {
+    position: absolute;
+    top: 0;
+    left: 67.5px;
+    width: 15px;
+    height: 100%;
+    background: linear-gradient(180deg, #ffd700, #ffe44d);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Thêm hiệu ứng lấp lánh */
+@keyframes sparkle {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(125deg, 
+        transparent 0%,
+        rgba(255, 255, 255, 0) 35%,
+        rgba(255, 255, 255, 0.4) 40%,
+        rgba(255, 255, 255, 0) 45%,
+        transparent 100%);
+    border-radius: 12px;
+    animation: sparkle 3s infinite;
+}
+/* Modal mật khẩu */
+#password-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+#password-modal.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.modal-content input {
+    padding: 10px;
+    width: 80%;
+    margin: 10px 0;
+    border: 2px solid #ff9aa2;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    background: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.modal-content button:hover {
+    background: #f77fbe;
+}
+
+#hint {
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+#greeting-card-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none; /* Ẩn theo mặc định */
+}
+
+/* Hiển thị overlay */
+#greeting-card-overlay.visible {
+    display: block;
+}
+/* Thiệp chúc */
+#greeting-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #fff;
+    border: 5px solid #ff9aa2;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    z-index: 1001;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+.hidden {
+    display: none;
+}
+#greeting-card.visible {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.card-content h2 {
+    font-size: 2rem;
+    color: #f77fbe;
+    margin-bottom: 15px;
+    animation: fadeIn 1s ease-out;
+}
+
+.card-content p {
+    font-size: 1.2rem;
+    color: #4d4d4d;
+    margin-bottom: 20px;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.card-content button {
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff9aa2, #fbd1b7);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.card-content button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #fbd1b7, #ff9aa2);
+}
+
+/* Hiệu ứng xuất hiện */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 
 img {
     width: 100%;

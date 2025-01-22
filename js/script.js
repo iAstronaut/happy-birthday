@@ -425,3 +425,68 @@ document.addEventListener("DOMContentLoaded", function () {
         confetti.resize();
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const giftBox = document.getElementById("gift-box");
+
+// Khởi tạo vị trí ngẫu nhiên và vận tốc
+let x = 0; // Đặt sát viền phải (150 là chiều rộng hộp quà)
+let y = 0; 
+let dx = (Math.random() - 0.5) * 4; // Tốc độ ngang (chậm hơn)
+let dy = (Math.random() - 0.5) * 4; // Tốc độ dọc (chậm hơn)
+
+// Đặt vị trí ban đầu
+giftBox.style.left = `${x}px`;
+giftBox.style.top = `${y}px`;
+
+// Hàm di chuyển hộp quà
+function moveBox() {
+    x += dx;
+    y += dy;
+
+    // Kiểm tra va chạm với các cạnh màn hình
+    const maxWidth = window.innerWidth - giftBox.offsetWidth; // Độ rộng tối đa
+    const maxHeight = window.innerHeight - giftBox.offsetHeight; // Chiều cao tối đa
+
+    if (x <= 0) {
+        x = 0; // Giữ bên trái
+        dx = -dx; // Đổi hướng ngang
+    } else if (x >= maxWidth) {
+        x = maxWidth; // Giữ bên phải
+        dx = -dx; // Đổi hướng ngang
+    }
+
+    if (y <= 0) {
+        y = 0; // Giữ bên trên
+        dy = -dy; // Đổi hướng dọc
+    } else if (y >= maxHeight) {
+        y = maxHeight; // Giữ bên dưới
+        dy = -dy; // Đổi hướng dọc
+    }
+
+    // Cập nhật vị trí hộp quà
+    giftBox.style.transform = `translate(${x}px, ${y}px)`;
+
+    // Di chuyển tiếp
+    requestAnimationFrame(moveBox);
+}
+
+// Bắt đầu di chuyển
+moveBox();
+    // Sự kiện khi bấm vào hộp quà
+    giftBox.addEventListener("click", function () {
+        const greetingCard = document.getElementById("greeting-card");
+    
+        if (giftBox.classList.contains("open")) {
+            // Đóng nắp hộp quà
+            giftBox.classList.remove("open");
+            greetingCard.classList.add("hidden");
+            greetingCard.classList.remove("visible");
+        } else {
+            // Mở nắp hộp quà
+            giftBox.classList.add("open");
+            greetingCard.classList.remove("hidden");
+            greetingCard.classList.add("visible");
+        }
+    });
+});
+
